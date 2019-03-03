@@ -11,20 +11,6 @@ FROM ubuntu:18.10 as onepassword_builder
 RUN apt-get update && apt-get install -y curl ca-certificates unzip
 RUN curl -sS -o 1password.zip https://cache.agilebits.com/dist/1P/op/pkg/v0.5.5/op_linux_amd64_v0.5.5.zip && unzip 1password.zip op -d /usr/bin &&  rm 1password.zip
 
-# install doctl
-FROM ubuntu:18.10 as doctl_builder
-RUN apt-get update && apt-get install -y wget ca-certificates
-RUN wget https://github.com/digitalocean/doctl/releases/download/v1.12.2/doctl-1.12.2-linux-amd64.tar.gz && tar xf doctl-1.12.2-linux-amd64.tar.gz && chmod +x doctl && mv doctl /usr/local/bin && rm doctl-1.12.2-linux-amd64.tar.gz
-
-# install terraform
-FROM ubuntu:18.10 as terraform_builder
-RUN apt-get update && apt-get install -y wget ca-certificates unzip
-RUN wget https://releases.hashicorp.com/terraform/0.11.11/terraform_0.11.11_linux_amd64.zip && unzip terraform_0.11.11_linux_amd64.zip && chmod +x terraform && mv terraform /usr/local/bin && rm terraform_0.11.11_linux_amd64.zip
-
-# install protobuf
-FROM ubuntu:18.10 as protobuf_builder
-RUN apt-get update && apt-get install -y wget ca-certificates unzip
-RUN wget https://github.com/protocolbuffers/protobuf/releases/download/v3.6.1/protoc-3.6.1-linux-x86_64.zip && unzip protoc-3.6.1-linux-x86_64.zip && mv bin/protoc /usr/local/bin && mv include/* /usr/local/include/ && rm protoc-3.6.1-linux-x86_64.zip
 
 # install vim plugins
 FROM ubuntu:18.10 as vim_plugins_builder
@@ -77,10 +63,6 @@ RUN go get -u github.com/fatih/motion
 RUN go get -u github.com/koron/iferr
 RUN go get -v -d github.com/stamblerre/gocode && go build -o gocode-gomod github.com/stamblerre/gocode && mv gocode-gomod /go/bin
 
-# generic tools
-RUN go get -u github.com/aybabtme/humanlog/cmd/...
-RUN go get -u github.com/fatih/hclfmt
-RUN GIT_TAG="v1.2.0" && go get -d -u github.com/golang/protobuf/protoc-gen-go && git -C "$(go env GOPATH)"/src/github.com/golang/protobuf checkout $GIT_TAG && go install github.com/golang/protobuf/protoc-gen-go
 
 
 # base OS
@@ -96,8 +78,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	clang \
 	cmake \
 	curl \
-	default-libmysqlclient-dev \
-	default-mysql-client \
 	direnv \
 	dnsutils \
 	docker.io \
@@ -116,7 +96,6 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	liblzma-dev \
 	libpq-dev \
 	libprotoc-dev \
-	libsqlite3-dev \
 	libssl-dev \
 	libvirt-clients \
 	libvirt-daemon-system \
@@ -145,10 +124,8 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	quilt \
 	ripgrep \
 	shellcheck \
-	silversearcher-ag \
 	socat \
 	software-properties-common \
-	sqlite3 \
 	stow \
 	sudo \
 	tig \
@@ -190,6 +167,10 @@ RUN export CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)" && \
 
 RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy && chmod +x cloud_sql_proxy && mv cloud_sql_proxy /usr/local/bin
 
+# ibmcloud
+RUN curl -fsSL https://clis.ng.bluemix.net/install/linux | sh
+RUN ibmcloud plugin install kubernetes-service
+
 # for correct colours is tmux
 ENV TERM screen-256color
 
@@ -202,20 +183,13 @@ COPY --from=onepassword_builder /usr/bin/op /usr/local/bin/
 # golang tools
 COPY --from=golang_builder /go/bin/* /usr/local/bin/
 
-# doctl tools
-COPY --from=doctl_builder /usr/local/bin/doctl /usr/local/bin/
 
-# terraform tools
-COPY --from=terraform_builder /usr/local/bin/terraform /usr/local/bin/
 
-# protobuf tools
-COPY --from=protobuf_builder /usr/local/bin/protoc /usr/local/bin/
-COPY --from=protobuf_builder /usr/local/include/google/ /usr/local/include/google
 
 # install tools
 RUN wget https://github.com/gsamokovarov/jump/releases/download/v0.22.0/jump_0.22.0_amd64.deb && sudo dpkg -i jump_0.22.0_amd64.deb && rm -rf jump_0.22.0_amd64.deb
 
-RUN mkdir ~/.ssh && curl -fsL https://github.com/fatih.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+RUN mkdir ~/.ssh && curl -fsL https://github.com/kitch.keys > ~/.ssh/authorized_keys && chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
 
 # vim plugins
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

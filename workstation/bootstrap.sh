@@ -25,7 +25,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill devbox
 ExecStartPre=-/usr/bin/docker rm devbox
 ExecStartPre=/usr/bin/docker pull kitch/devbox:latest
-ExecStart=/usr/bin/docker run -h dev -e TZ=UTC --net=host --rm -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/code:/root/code -v /mnt/secrets:/root/secrets --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --name dev kitch/devbox:latest
+ExecStart=/usr/bin/docker run -h dev -e TZ=UTC --net=host --rm -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/code:/root/code -v /mnt/secrets:/root/secrets -v /home/jakekit/.ssh/github_rsa:/root/.ssh/github_rsa --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --name devbox kitch/devbox:latest
 
 [Install]
 WantedBy=multi-user.target
@@ -33,7 +33,7 @@ EOF
 
 sudo mv dockerdevbox.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable dockerdev
-sudo systemctl start dockerdev
+sudo systemctl enable dockerdevbox
+sudo systemctl start dockerdevbox
 
 echo "Done!"

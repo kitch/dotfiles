@@ -35,6 +35,9 @@ alias b='git branch'
 alias hc='hub compare'
 alias hb='hub browse'
 
+alias ic='ibmcloud'
+alias k='kubectl'
+
 alias -s go='go run'
 alias hs='hugo server'
 

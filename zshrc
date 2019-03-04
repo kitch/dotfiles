@@ -174,6 +174,14 @@ zstyle ':completion:*' rehash true
 # Keep directories and files separated
 zstyle ':completion:*' list-dirs-first true
 
+
+# kubectl autocompletion
+source <(kubectl completion zsh)
+
+# ibmcloud autocompletion
+source /usr/local/ibmcloud/autocomplete/zsh_autocomplete
+
+
 # ===================
 #    KEY BINDINGS
 # ===================

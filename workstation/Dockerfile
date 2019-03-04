@@ -170,6 +170,7 @@ RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql
 # ibmcloud
 RUN curl -fsSL https://clis.ng.bluemix.net/install/linux | sh
 RUN ibmcloud plugin install kubernetes-service
+RUN ibmcloud plugin install infrastructure-service
 
 # for correct colours is tmux
 ENV TERM screen-256color
@@ -200,6 +201,7 @@ RUN git clone https://github.com/junegunn/fzf /root/.fzf && cd /root/.fzf && git
 # zsh plugins
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+RUN git clone https://github.com/zsh-users/zsh-history-substring-search ~/.zsh/zsh-history-substring-search
 
 # tmux plugins
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

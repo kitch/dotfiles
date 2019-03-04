@@ -174,6 +174,14 @@ zstyle ':completion:*' rehash true
 # Keep directories and files separated
 zstyle ':completion:*' list-dirs-first true
 
+
+# kubectl autocompletion
+source <(kubectl completion zsh)
+
+# ibmcloud autocompletion
+source /usr/local/ibmcloud/autocomplete/zsh_autocomplete
+
+
 # ===================
 #    KEY BINDINGS
 # ===================
@@ -261,3 +269,7 @@ eval "$(jump shell)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
+
+# KUBE PS1
+source ~/code/scratch/kube-ps1/kube-ps1.sh
+PROMPT='$(kube_ps1)'$PROMPT

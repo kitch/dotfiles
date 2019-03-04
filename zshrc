@@ -183,8 +183,6 @@ bindkey -e
 # [Ctrl-r] - Search backward incrementally for a specified string. The string
 # may begin with ^ to anchor the search to the beginning of the line.
 bindkey '^r' history-incremental-search-backward
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 
 if [[ "${terminfo[kpp]}" != "" ]]; then
   bindkey "${terminfo[kpp]}" up-line-or-history       # [PageUp] - Up a line of history
@@ -246,6 +244,12 @@ exit() {
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
+
+# ======================
+#    POST PLUGIN BINDS
+# ======================
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # ===================
 #    THIRD PARTY

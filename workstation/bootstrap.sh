@@ -25,7 +25,7 @@ TimeoutStartSec=0
 ExecStartPre=-/usr/bin/docker kill devbox
 ExecStartPre=-/usr/bin/docker rm devbox
 ExecStartPre=/usr/bin/docker pull kitch/devbox:latest
-ExecStart=/usr/bin/docker run -h dev -e TZ=UTC --net=host --rm -v /var/run/docker.sock:/var/run/docker.sock -v /mnt/code:/root/code -v /mnt/secrets:/root/secrets -v /home/jakekit/devbox/id_rsa:/root/.ssh/github_rsa -v /home/jakekit/devbox/id_rsa:/root/.ssh/id_rsa -v /home/jakekit/devbox/zhistory:/root/.zsh_history --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --name devbox kitch/devbox:latest
+ExecStart=/usr/bin/docker run -h dev -e TZ=UTC --net=host --rm -v /var/run/docker.sock:/var/run/docker.sock -v /home/jakekit/devbox/code:/root/code -v /home/jakekit/devbox/secrets:/root/secrets -v /home/jakekit/devbox/id_rsa:/root/.ssh/github_rsa -v /home/jakekit/devbox/id_rsa:/root/.ssh/id_rsa -v /home/jakekit/devbox/zhistory:/root/.zsh_history --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --name devbox kitch/devbox:latest
 ExecStop=~/usr/bin/docker rm -f devbox
 
 [Install]

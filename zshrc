@@ -269,3 +269,7 @@ eval "$(jump shell)"
 # brew install direnv
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
+
+# KUBE PS1
+source ~/code/scratch/kube-ps1/kube-ps1.sh
+PROMPT='$(kube_ps1)'$PROMPT

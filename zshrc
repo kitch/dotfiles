@@ -84,6 +84,9 @@ setopt inc_append_history
 # share command history data
 setopt share_history 
 
+# KUBE PS1
+source ~/code/scratch/kube-ps1/kube-ps1.sh
+
 # =============
 #    PROMPT
 # =============
@@ -91,8 +94,9 @@ autoload -U colors && colors
 setopt promptsubst
 
 local ret_status="%(?:%{$fg_bold[green]%}$:%{$fg_bold[green]%}$)"
-PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
-
+#PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
+NEWLINE=$'\n'
+PROMPT='$(kube_ps1) $(git_prompt_info) ${NEWLINE} ${ret_status} %{$fg[cyan]%}%c%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
@@ -270,6 +274,4 @@ eval "$(jump shell)"
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
 
-# KUBE PS1
-source ~/code/scratch/kube-ps1/kube-ps1.sh
-PROMPT='$(kube_ps1)'$PROMPT
+

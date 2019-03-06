@@ -90,6 +90,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	htop \
 	hugo \
 	ipcalc \
+	iputils-ping \
 	jq \
 	less \
 	libclang-dev \

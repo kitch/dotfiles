@@ -111,6 +111,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	openssh-server \
 	pkg-config \
 	postgresql-contrib \
+	psmisc \
 	protobuf-compiler \
 	pwgen \
 	python \

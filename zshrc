@@ -23,7 +23,7 @@ case `uname` in
     alias ll='ls -alGpF' # Mac OSX specific
   ;;
   Linux)
-    alias ll='ls -al'
+    alias ll='ls -l'
     alias ls='ls --color=auto' 
   ;;
 esac

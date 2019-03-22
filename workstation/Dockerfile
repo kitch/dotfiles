@@ -90,6 +90,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	htop \
 	hugo \
 	ipcalc \
+	iputils-ping \
 	jq \
 	less \
 	libclang-dev \
@@ -110,6 +111,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -qq -y \
 	openssh-server \
 	pkg-config \
 	postgresql-contrib \
+	psmisc \
 	protobuf-compiler \
 	pwgen \
 	python \

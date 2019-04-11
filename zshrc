@@ -96,7 +96,7 @@ setopt promptsubst
 local ret_status="%(?:%{$fg_bold[green]%}$:%{$fg_bold[green]%}$)"
 #PROMPT='${ret_status} %{$fg[cyan]%}%c%{$reset_color%} $(git_prompt_info)'
 NEWLINE=$'\n'
-PROMPT='$(kube_ps1) $(git_prompt_info) ${NEWLINE}$fg_bold[blue]%{$fg[cyan]%}%c%{$reset_color%} ${ret_status}%{$reset_color%} '
+PROMPT='$(kube_ps1) $(git_prompt_info) ${NEWLINE}%{$fg_bold[blue]%}%{$fg[cyan]%}%c%{$reset_color%} ${ret_status}%{$reset_color%} '
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg_bold[blue]%}git:(%{$fg[red]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%} "
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[blue]%}) %{$fg[yellow]%}✗"
@@ -151,24 +151,24 @@ setopt complete_in_word
 setopt always_to_end
 
 # autocompletion with an arrow-key driven interface
-zstyle ':completion:*:*:*:*:*' menu select
+# zstyle ':completion:*:*:*:*:*' menu select
 
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+# zstyle ':completion:*' list-colors ''
+# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+# zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 
 # Don't complete uninteresting users
-zstyle ':completion:*:*:*:users' ignored-patterns \
-        adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
-        clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
-        gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm \
-        ldap lp mail mailman mailnull man messagebus  mldonkey mysql nagios \
-        named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn \
-        operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
-        rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
-        usbmux uucp vcsa wwwrun xfs '_*'
+#zstyle ':completion:*:*:*:users' ignored-patterns \
+#        adm amanda apache at avahi avahi-autoipd beaglidx bin cacti canna \
+#        clamav daemon dbus distcache dnsmasq dovecot fax ftp games gdm \
+#        gkrellmd gopher hacluster haldaemon halt hsqldb ident junkbust kdm \
+#        ldap lp mail mailman mailnull man messagebus  mldonkey mysql nagios \
+#        named netdump news nfsnobody nobody nscd ntp nut nx obsrun openvpn \
+#        operator pcap polkitd postfix postgres privoxy pulse pvm quagga radvd \
+#        rpc rpcuser rpm rtkit scard shutdown squid sshd statd svn sync tftp \
+#        usbmux uucp vcsa wwwrun xfs '_*'
 
 zstyle '*' single-ignored show
 
@@ -224,6 +224,12 @@ else
   bindkey "\e[3~" delete-char
 fi
 
+
+bindkey "[D" backward-word
+bindkey "[C" forward-word
+bindkey "^[a" beginning-of-line
+bindkey "^[e" end-of-line
+
 # ===================
 #    MISC SETTINGS
 # ===================
@@ -260,8 +266,8 @@ source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 # ======================
 #    POST PLUGIN BINDS
 # ======================
-bindkey '^[OA' history-substring-search-up
-bindkey '^[OB' history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 # ===================
 #    THIRD PARTY
@@ -274,4 +280,6 @@ eval "$(jump shell)"
 # https://github.com/direnv/direnv
 eval "$(direnv hook zsh)"
 
-
+# Virtualenvwrapper things
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh

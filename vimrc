@@ -4,7 +4,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Raimondi/delimitMate'
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'cespare/vim-toml'
 Plug 'corylanou/vim-present', {'for' : 'present'}
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
@@ -57,7 +57,7 @@ set hlsearch                    " Highlight found searches
 set mouse=a                     "Enable mouse mode
 
 set noerrorbells             " No beeps
-set number                   " Show line numbers
+" set number                   " Show line numbers
 set showcmd                  " Show me what I'm typing
 set noswapfile               " Don't use swapfile
 set nobackup                 " Don't create annoying backup files

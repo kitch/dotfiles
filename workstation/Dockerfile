@@ -211,6 +211,9 @@ RUN git clone https://github.com/tmux-plugins/tmux-open.git ~/.tmux/plugins/tmux
 RUN git clone https://github.com/tmux-plugins/tmux-yank.git ~/.tmux/plugins/tmux-yank
 RUN git clone https://github.com/tmux-plugins/tmux-prefix-highlight.git ~/.tmux/plugins/tmux-prefix-highlight
 
+# kube plugins
+RUN git clone https://github.com/jonmosco/kube-ps1 ~/.kubeps1/
+
 RUN chsh -s /usr/bin/zsh
 
 EXPOSE 3222 60000-60010/udp

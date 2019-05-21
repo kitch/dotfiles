@@ -1,6 +1,6 @@
 [user]
-	name = Fatih Arslan
-	email = ftharsln@gmail.com
+	name = Jake Kitchener
+	email = jakek@us.ibm.com
 [alias]
 	st = status -sb
 	ci = commit
@@ -35,11 +35,11 @@
 	whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	editor = vim
 	quotepath = false
-	excludesfile = /Users/fatih/.gitignore_global
+	excludesfile = /Users/kitch/.gitignore_global
 [credential]
 	helper = osxkeychain
 [github]
-	user = fatih
+	user = kitch
 [mergetool]
 	keepBackup = true
 [filter "media"]

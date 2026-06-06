@@ -15,10 +15,18 @@ export PATH="$HOME/.local/bin:$PATH"
 HISTSIZE=50000
 SAVEHIST=50000
 HISTFILE=~/.zsh_history
-setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt SHARE_HISTORY
 setopt EXTENDED_HISTORY
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OA'  up-line-or-beginning-search
+bindkey '^[OB'  down-line-or-beginning-search
 
 # ── Options ───────────────────────────────────────────────────────────────────
 setopt AUTO_CD

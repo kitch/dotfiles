@@ -58,7 +58,7 @@ install_homebrew() {
 
 install_packages() {
   info "Installing packages from Brewfile..."
-  brew bundle --file="$DOTFILES/Brewfile" --no-lock
+  brew bundle --file="$DOTFILES/Brewfile"
   success "Packages installed"
 }
 

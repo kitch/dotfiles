@@ -1,5 +1,3 @@
-tap "homebrew/bundle"
-
 # Core shell
 brew "zsh"
 brew "starship"
@@ -37,7 +35,8 @@ brew "kustomize"
 brew "kubeseal"
 
 # Infrastructure / cloud
-brew "terraform"
+tap "hashicorp/tap"
+brew "hashicorp/tap/terraform"
 brew "awscli"
 brew "azure-cli"
 
@@ -50,6 +49,5 @@ brew "difftastic"
 # Terminal
 cask "ghostty"
 
-# Fonts (for Starship glyphs)
-tap "homebrew/cask-fonts"
+# Fonts (for Starship glyphs — now in main cask repo)
 cask "font-jetbrains-mono-nerd-font"

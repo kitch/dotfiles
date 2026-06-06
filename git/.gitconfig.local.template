@@ -1,0 +1,17 @@
+# Copy this to ~/.gitconfig.local and fill in your details.
+# This file is NOT committed — it stays local to each machine.
+
+[user]
+  name = Your Name
+  email = you@example.com
+  # signingkey = YOUR_GPG_OR_SSH_KEY_ID
+
+# Uncomment to sign commits with SSH key:
+# [gpg]
+#   format = ssh
+# [commit]
+#   gpgsign = true
+
+# Work-specific config — override for repos under ~/work/
+# [includeIf "gitdir:~/work/"]
+#   path = ~/.gitconfig.work

@@ -1,0 +1,30 @@
+# Local git identity (name, email, signing key — never commit these)
+git/.gitconfig.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Secrets and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*.env
+.env*
+!.env.example
+
+# Temporary files
+*.swp
+*.swo
+*~
+.*.swp
+
+# Claude Code local settings
+.claude/
+
+# Homebrew bundle lock
+Brewfile.lock.json

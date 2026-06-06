@@ -1,0 +1,62 @@
+[core]
+  editor = nvim
+  pager = delta
+  autocrlf = input
+  excludesfile = ~/.gitignore_global
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = false
+
+[push]
+  default = current
+  autoSetupRemote = true
+
+[fetch]
+  prune = true
+
+[merge]
+  conflictstyle = zdiff3
+
+[diff]
+  algorithm = histogram
+  colorMoved = default
+
+[rebase]
+  autoStash = true
+  autoSquash = true
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+  light = false
+  side-by-side = true
+  line-numbers = true
+
+[color]
+  ui = auto
+
+[alias]
+  st = status
+  co = checkout
+  br = branch
+  lg = log --oneline --graph --decorate --all
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  aliases = config --get-regexp alias
+  undo = reset --soft HEAD~1
+  wip = !git add -A && git commit -m 'wip'
+  unwip = !git log -n 1 | grep -q -c wip && git reset HEAD~1
+
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
+# Machine-local overrides: name, email, signing key
+# Copy git/.gitconfig.local.template → git/.gitconfig.local and fill it in.
+# This file is gitignored and never committed.
+[include]
+  path = ~/.gitconfig.local

@@ -40,6 +40,9 @@ brew "hashicorp/tap/terraform"
 brew "awscli"
 brew "azure-cli"
 
+# Editor
+brew "neovim"
+
 # Misc dev tools
 brew "make"
 brew "mkcert"

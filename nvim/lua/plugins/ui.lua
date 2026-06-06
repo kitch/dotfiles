@@ -27,14 +27,14 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
-        theme = "catppuccin",
+        theme = "auto",
         globalstatus = true,
         component_separators = "|",
         section_separators = "",
       },
       sections = {
         lualine_a = { "mode" },
-        lualine_b = { "branch", "diff", "diagnostics" },
+        lualine_b = { "branch", "diff", { "diagnostics", sources = { "nvim_lsp" } } },
         lualine_c = { { "filename", path = 1 } },
         lualine_x = { "encoding", "filetype" },
         lualine_y = { "progress" },

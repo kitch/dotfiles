@@ -1,29 +1,6 @@
 return {
-  -- LSP installer
-  {
-    "williamboman/mason.nvim",
-    opts = {},
-  },
+  { "williamboman/mason.nvim", opts = {} },
 
-  -- Bridge mason ↔ lspconfig
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    opts = {
-      ensure_installed = {
-        "gopls",        -- Go
-        "lua_ls",       -- Lua
-        "yamlls",       -- YAML / Kubernetes manifests
-        "dockerls",     -- Dockerfile
-        "bashls",       -- Shell scripts
-        "terraformls",  -- Terraform
-        "pyright",      -- Python
-      },
-      automatic_installation = true,
-    },
-  },
-
-  -- LSP configs
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -32,7 +9,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       local on_attach = function(_, buf)
@@ -49,10 +25,9 @@ return {
         map("<leader>f",  function() vim.lsp.buf.format({ async = true }) end, "Format")
       end
 
-      -- Go
-      lspconfig.gopls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
+      vim.lsp.config("*", { capabilities = capabilities, on_attach = on_attach })
+
+      vim.lsp.config("gopls", {
         settings = {
           gopls = {
             analyses = { unusedparams = true, shadow = true },
@@ -62,10 +37,7 @@ return {
         },
       })
 
-      -- YAML — with Kubernetes schema detection
-      lspconfig.yamlls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
+      vim.lsp.config("yamlls", {
         settings = {
           yaml = {
             schemas = {
@@ -82,10 +54,7 @@ return {
         },
       })
 
-      -- Lua (for editing this config)
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities,
-        on_attach = on_attach,
+      vim.lsp.config("lua_ls", {
         settings = {
           Lua = {
             diagnostics = { globals = { "vim" } },
@@ -95,12 +64,15 @@ return {
         },
       })
 
-      -- Simple setups
-      for _, server in ipairs({ "dockerls", "bashls", "terraformls", "pyright" }) do
-        lspconfig[server].setup({ capabilities = capabilities, on_attach = on_attach })
-      end
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "gopls", "lua_ls", "yamlls", "dockerls", "bashls", "terraformls", "pyright",
+        },
+        handlers = {
+          function(server_name) vim.lsp.enable(server_name) end,
+        },
+      })
 
-      -- Diagnostic signs
       vim.diagnostic.config({
         virtual_text = true,
         signs = true,
@@ -159,7 +131,7 @@ return {
   {
     "stevearc/conform.nvim",
     opts = {
-      format_on_save = { timeout_ms = 500, lsp_fallback = true },
+      format_on_save = { timeout_ms = 500, lsp_format = "fallback" },
       formatters_by_ft = {
         go       = { "goimports", "gofmt" },
         lua      = { "stylua" },

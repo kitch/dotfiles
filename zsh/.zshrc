@@ -70,6 +70,31 @@ alias gb='git branch'
 alias glog='git log --oneline --graph --decorate'
 alias gd='git diff'
 
+# ── Lima / k3s ───────────────────────────────────────────────────────────────
+alias lstart='limactl start k3s'
+alias lstop='limactl stop k3s'
+alias ldelete='limactl delete k3s'
+alias lls='limactl list'
+alias lshell='limactl shell k3s'
+
+# Merge k3s kubeconfig into ~/.kube/config on demand
+kmerge-k3s() {
+  local lima_cfg="$HOME/.lima/k3s/copied-from-guest/kubeconfig.yaml"
+  if [[ ! -f "$lima_cfg" ]]; then
+    echo "k3s VM not running — start it with: lstart"
+    return 1
+  fi
+  mkdir -p "$HOME/.kube"
+  if [[ ! -f "$HOME/.kube/config" ]]; then
+    cp "$lima_cfg" "$HOME/.kube/config"
+  else
+    KUBECONFIG="$HOME/.kube/config:$lima_cfg" kubectl config view --flatten > "$HOME/.kube/config.merged"
+    mv "$HOME/.kube/config.merged" "$HOME/.kube/config"
+  fi
+  kubectl config use-context default
+  echo "Merged k3s context → ~/.kube/config"
+}
+
 # ── Kubernetes aliases ────────────────────────────────────────────────────────
 alias k='kubectl'
 alias kg='kubectl get'
@@ -115,6 +140,30 @@ alias hidefiles='defaults write com.apple.finder AppleShowAllFiles NO; killall F
 
 # Quick HTTP server in current directory
 serve() { python3 -m http.server "${1:-8000}"; }
+
+# ── Python (uv) ───────────────────────────────────────────────────────────────
+if command -v uv &>/dev/null; then
+  eval "$(uv generate-shell-completion zsh)"
+  export UV_PYTHON_DOWNLOADS=auto
+fi
+
+# ── Podman / local AI ─────────────────────────────────────────────────────────
+alias pm='podman'
+alias pmc='podman-compose'
+
+OPEN_WEBUI_COMPOSE="$HOME/projects/dotfiles/services/open-webui/compose.yml"
+
+webui-start() {
+  podman machine start 2>/dev/null || true
+  podman-compose -f "$OPEN_WEBUI_COMPOSE" up -d
+  echo "Open WebUI → http://localhost:3000"
+}
+webui-stop()   { podman-compose -f "$OPEN_WEBUI_COMPOSE" down; }
+webui-logs()   { podman-compose -f "$OPEN_WEBUI_COMPOSE" logs -f; }
+webui-update() {
+  podman pull ghcr.io/open-webui/open-webui:main
+  podman-compose -f "$OPEN_WEBUI_COMPOSE" up -d --force-recreate
+}
 
 # ── Starship prompt ───────────────────────────────────────────────────────────
 if command -v starship &>/dev/null; then

@@ -65,15 +65,6 @@ disabled = false
 symbol = "☸ "
 style = "bold green"
 format = "[$symbol$context( \\($namespace\\))]($style) "
-# Only show k8s context when in a directory with k8s files, OR always show
-# Set to true to always show context (useful when doing lots of k8s work)
-detect_files = ["helmfile.yaml", "Chart.yaml", "kustomization.yaml", "*.k8s.yaml", "*.k8s.yml"]
-detect_extensions = []
-detect_folders = ["k8s", "kubernetes", "helm", "manifests", "deploy"]
-
-# Show k8s context in any directory
-# Comment the detect_* lines above and uncomment below to always show:
-# disabled = false
 
 # ── Terraform ──────────────────────────────────────────────────────────────────
 [terraform]

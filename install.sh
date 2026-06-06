@@ -108,6 +108,21 @@ setup_fzf() {
   fi
 }
 
+# ── Podman machine ────────────────────────────────────────────────────────────
+setup_podman() {
+  if ! command -v podman &>/dev/null; then
+    warn "podman not found — skipping machine setup"
+    return
+  fi
+  if podman machine list --format '{{.Name}}' 2>/dev/null | grep -q .; then
+    success "Podman machine already exists"
+  else
+    info "Initialising Podman machine..."
+    podman machine init
+    success "Podman machine initialised (run 'podman machine start' to use it)"
+  fi
+}
+
 # ── macOS defaults ────────────────────────────────────────────────────────────
 setup_macos() {
   info "Applying macOS defaults..."
@@ -166,6 +181,7 @@ main() {
   link_configs
   setup_git_identity
   setup_fzf
+  setup_podman
 
   if [[ "$skip_macos" == false ]]; then
     setup_macos
@@ -178,6 +194,9 @@ main() {
   echo "  1. Edit ~/.gitconfig.local with your name and email"
   echo "  2. Restart Ghostty to apply the config"
   echo "  3. Tweak starship/starship.toml to your taste"
+  echo "  4. Pull a model:  ollama pull llama3.2"
+  echo "  5. Start WebUI:   webui-start  (then open http://localhost:3000)"
+  echo "  6. Python:        uv python install 3.12  (or let uv auto-install per project)"
   echo ""
 }
 

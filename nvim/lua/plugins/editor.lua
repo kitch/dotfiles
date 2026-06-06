@@ -23,21 +23,20 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "go", "gomod", "gowork", "gosum",
-          "lua", "vim", "vimdoc",
-          "yaml", "json", "toml",
-          "bash", "dockerfile",
-          "markdown", "markdown_inline",
-          "python", "rust",
-          "hcl", -- terraform
-        },
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
-    end,
+    main = "nvim-treesitter.config",
+    opts = {
+      ensure_installed = {
+        "go", "gomod", "gowork", "gosum",
+        "lua", "vim", "vimdoc",
+        "yaml", "json", "toml",
+        "bash", "dockerfile",
+        "markdown", "markdown_inline",
+        "python", "rust",
+        "hcl",
+      },
+      highlight = { enable = true },
+      indent = { enable = true },
+    },
   },
 
   -- Auto pairs

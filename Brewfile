@@ -26,6 +26,7 @@ brew "golangci-lint"
 brew "goreleaser"
 
 # Kubernetes
+brew "lima"
 brew "kubectl"
 brew "kubectx"   # kubectx + kubens
 brew "helm"
@@ -48,6 +49,17 @@ brew "make"
 brew "mkcert"
 brew "httpie"
 brew "difftastic"
+
+# Local AI
+cask "ollama"
+brew "podman"
+brew "podman-compose"
+
+# Node (required for mason LSP servers: yamlls, dockerls, bashls, pyright)
+brew "node"
+
+# Python
+brew "uv"
 
 # Terminal
 cask "ghostty"

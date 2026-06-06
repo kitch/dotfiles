@@ -80,6 +80,9 @@ link_configs() {
   # Starship
   link "$DOTFILES/starship/starship.toml" "$HOME/.config/starship.toml"
 
+  # Neovim
+  link "$DOTFILES/nvim" "$HOME/.config/nvim"
+
   success "All configs linked"
 }
 

@@ -12,6 +12,10 @@
 # [commit]
 #   gpgsign = true
 
+# If you have an SSH key configured for GitHub, uncomment to rewrite HTTPS → SSH:
+# [url "git@github.com:"]
+#   insteadOf = https://github.com/
+
 # Work-specific config — override for repos under ~/work/
 # [includeIf "gitdir:~/work/"]
 #   path = ~/.gitconfig.work
